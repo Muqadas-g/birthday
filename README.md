@@ -1,4 +1,4 @@
-# Romantic Birthday Website for Your Special One 💖
+# Birthday Website for Your Special One 💖
 
 ## Overview
 A beautifully designed, interactive birthday website created with pure HTML, CSS, and JavaScript. This website delivers a personalized digital birthday card experience with romantic Urdu shayari, heartfelt messages, and engaging animations.
