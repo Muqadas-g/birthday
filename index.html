@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Baby! 🎂✨</title>
+    <style>
+        /* Modern Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0;
+            animation: floatUp 15s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-dot.active {
+            background: #ff4d94;
+            transform: scale(1.3);
+            box-shadow: 0 0 20px #ff4d94;
+        }
+
+        .nav-dot:hover::after {
+            content: attr(data-title);
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        /* Page Container */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 80px 20px 20px;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .page-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Page 1: Hero Section */
+        #page1 {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+            background: linear-gradient(45deg, #fff, #ffdde1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, #ff4d94, #ff6b6b);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 10px 30px rgba(255, 77, 148, 0.3);
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 77, 148, 0.5);
+        }
+
+        /* Page 2: Heart Message */
+        #page2 {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        }
+
+        .heart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .pulse-heart {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #ff4d94, #ff6b6b);
+            position: relative;
+            transform: rotate(45deg);
+            animation: pulse 1.5s ease-in-out infinite;
+            box-shadow: 0 0 50px rgba(255, 77, 148, 0.5);
+        }
+
+        .pulse-heart:before,
+        .pulse-heart:after {
+            content: '';
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #ff4d94, #ff6b6b);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .pulse-heart:before {
+            top: -60px;
+            left: 0;
+        }
+
+        .pulse-heart:after {
+            top: 0;
+            left: -60px;
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(45deg) scale(1); }
+            5% { transform: rotate(45deg) scale(1.1); }
+            10% { transform: rotate(45deg) scale(1); }
+            15% { transform: rotate(45deg) scale(1.2); }
+            50% { transform: rotate(45deg) scale(1); }
+            100% { transform: rotate(45deg) scale(1); }
+        }
+
+        .message-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 700px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .urdu-shayari {
+            font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+            font-size: 2rem;
+            line-height: 1.8;
+            text-align: center;
+            margin-bottom: 20px;
+            direction: rtl;
+        }
+
+        .english-trans {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-style: italic;
+            text-align: center;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 20px;
+        }
+
+        /* Page 3: Romantic Promises */
+        #page3 {
+            background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+        }
+
+        .promises-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .promises-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .promises-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .promise-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .promise-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .promise-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .promise-card p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Page 4: Love Story */
+        #page4 {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+        }
+
+        .love-story {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .story-timeline {
+            position: relative;
+            padding-left: 40px;
+            margin-top: 40px;
+        }
+
+        .story-timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .story-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+        }
+
+        .story-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff4d94;
+            border: 3px solid white;
+            box-shadow: 0 0 0 4px rgba(255, 77, 148, 0.3);
+        }
+
+        .story-year {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ff4d94;
+            margin-bottom: 10px;
+        }
+
+        .story-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        /* Page 5: Future Together */
+        #page5 {
+            background: linear-gradient(135deg, #654ea3 0%, #da98b4 100%);
+        }
+
+        .future-vision {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .vision-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px;
+            margin-top: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .vision-item {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .vision-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .vision-item h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .vision-item p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        /* Page 6: Celebration */
+        #page6 {
+            background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+        }
+
+        .celebration {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cake-container {
+            position: relative;
+            width: 200px;
+            height: 180px;
+            margin: 40px auto;
+        }
+
+        .cake {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .cake-layer {
+            width: 200px;
+            height: 60px;
+            background: linear-gradient(to bottom, #ffb6c1, #ff8fab);
+            border-radius: 10px 10px 0 0;
+            position: relative;
+        }
+
+        .layer-2 {
+            width: 160px;
+            height: 50px;
+            background: linear-gradient(to bottom, #ffd7e0, #ffb6c1);
+            transform: translateX(20px);
+        }
+
+        .layer-3 {
+            width: 120px;
+            height: 40px;
+            background: linear-gradient(to bottom, #fff, #ffd7e0);
+            transform: translateX(40px);
+        }
+
+        .candle {
+            width: 8px;
+            height: 40px;
+            background: white;
+            position: absolute;
+            bottom: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 4px;
+        }
+
+        .flame {
+            width: 20px;
+            height: 40px;
+            background: linear-gradient(to bottom, #ffd700, #ff8c00);
+            position: absolute;
+            bottom: 180px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50% 50% 20% 20%;
+            animation: flicker 0.5s infinite alternate;
+            filter: blur(1px);
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+            100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+        }
+
+        .final-message {
+            font-size: 2rem;
+            margin: 40px 0;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .page-content {
+                padding: 20px;
+            }
+            
+            .urdu-shayari {
+                font-size: 1.5rem;
+            }
+            
+            .promises-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 10px;
+                bottom: 20px;
+            }
+            
+            .nav-container {
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .urdu-shayari {
+                font-size: 1.3rem;
+            }
+            
+            .message-box,
+            .love-story,
+            .vision-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <!-- Navigation Dots -->
+    <div class="nav-container">
+        <div class="nav-dot active" data-title="Happy Birthday!" data-page="0"></div>
+        <div class="nav-dot" data-title="My Love" data-page="1"></div>
+        <div class="nav-dot" data-title="My Promises" data-page="2"></div>
+        <div class="nav-dot" data-title="Our Story" data-page="3"></div>
+        <div class="nav-dot" data-title="Future Together" data-page="4"></div>
+        <div class="nav-dot" data-title="Celebration" data-page="5"></div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevBtn"><i class="fas fa-arrow-left"></i> Previous</button>
+        <button class="nav-btn" id="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
+    </div>
+
+    <!-- Page 1: Hero -->
+    <div id="page1" class="page active">
+        <div class="page-content">
+            <div class="hero">
+                <h1>Happy Birthday, My Love! 🎉</h1>
+                <p>To the most beautiful soul who lights up my world every single day. Today and always, you deserve all the happiness in the universe! ✨</p>
+                <button class="start-btn" id="startBtn">
+                    <i class="fas fa-heart"></i> Start the Celebration!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 2: Heart Message -->
+    <div id="page2" class="page">
+        <div class="page-content">
+            <div class="heart-container">
+                <div class="pulse-heart"></div>
+                <div class="message-box">
+                    <p class="urdu-shayari">
+                        تمھاری ہر سانس میری دعا ہے<br>
+                        تمھاری ہر خواہش میری منزل ہے
+                    </p>
+                    <div class="english-trans">
+                        Your every breath is my prayer,<br>
+                        Your every wish is my destination
+                    </div>
+                    
+                    <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                        <h3 style="font-size: 1.8rem; margin-bottom: 15px;">My Promise to You</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.7;">
+                            I promise to stand by you through every storm,<br>
+                            To celebrate every victory,<br>
+                            And to love you more with each passing day.<br>
+                            You are my forever and always. ❤️
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 3: Romantic Promises -->
+    <div id="page3" class="page">
+        <div class="page-content">
+            <div class="promises-section">
+                <h2>My Promises to You 💍</h2>
+                <div class="promises-grid">
+                    <div class="promise-card">
+                        <h3><i class="fas fa-heart"></i> Unconditional Love</h3>
+                        <p>I will love you today, tomorrow, and forever - through every high and low, in every season of life.</p>
+                    </div>
+                    <div class="promise-card">
+                        <h3><i class="fas fa-hands-helping"></i> Always Your Support</h3>
+                        <p>I will be your biggest cheerleader, your strongest supporter, and your safest place to fall.</p>
+                    </div>
+                    <div class="promise-card">
+                        <h3><i class="fas fa-star"></i> Make You Smile</h3>
+                        <p>I promise to make you smile every single day and to be the reason for your happiness.</p>
+                    </div>
+                    <div class="promise-card">
+                        <h3><i class="fas fa-home"></i> Build Our Home</h3>
+                        <p>Together, we will build a home filled with love, laughter, and beautiful memories.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 4: Love Story -->
+    <div id="page4" class="page">
+        <div class="page-content">
+            <div class="love-story">
+                <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px;">Our Beautiful Journey ❤️</h2>
+                <div class="story-timeline">
+                    <div class="story-item">
+                        <div class="story-year">The Beginning</div>
+                        <div class="story-content">
+                            From the moment I met you, my world changed colors. Every conversation, every laugh, every moment with you felt like destiny.
+                        </div>
+                    </div>
+                    <div class="story-item">
+                        <div class="story-year">Falling in Love</div>
+                        <div class="story-content">
+                            With each passing day, I fell more in love with your smile, your kindness, and the beautiful person you are. You became my favorite part of every day.
+                        </div>
+                    </div>
+                    <div class="story-item">
+                        <div class="story-year">Today & Always</div>
+                        <div class="story-content">
+                            Now, I can't imagine my life without you. You are my partner, my best friend, and my greatest blessing. I thank Allah every day for you.
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px; text-align: center;">
+                    <p class="urdu-shayari" style="font-size: 1.8rem;">
+                        تم میرے دل کی دھڑکن ہو<br>
+                        میری ہر سانس تمھارے نام ہو
+                    </p>
+                    <p class="english-trans" style="margin-top: 10px;">
+                        You are the heartbeat of my heart,<br>
+                        Every breath I take is in your name
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 5: Future Together -->
+    <div id="page5" class="page">
+        <div class="page-content">
+            <div class="future-vision">
+                <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Our Beautiful Future Together ✨</h2>
+                <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 40px;">
+                    A glimpse of the beautiful life we will build together
+                </p>
+                
+                <div class="vision-card">
+                    <div class="vision-item">
+                        <h3><i class="fas fa-mosque"></i> A Home Filled with Faith</h3>
+                        <p>We'll build a home where Allah's name is remembered every day, where we pray together, and raise our family with Islamic values.</p>
+                    </div>
+                    
+                    <div class="vision-item">
+                        <h3><i class="fas fa-laugh-beam"></i> Endless Laughter & Joy</h3>
+                        <p>Our home will echo with laughter, our days filled with joy, and our hearts always connected through love and understanding.</p>
+                    </div>
+                    
+                    <div class="vision-item">
+                        <h3><i class="fas fa-hands"></i> Growing Together</h3>
+                        <p>We'll support each other's dreams, celebrate each other's successes, and grow together in faith, love, and happiness.</p>
+                    </div>
+                    
+                    <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center;">
+                        <p class="urdu-shayari" style="font-size: 1.8rem;">
+                            تمھارے ساتھ ہر لمحہ جنت ہے<br>
+                            تمھاری محبت میری سب سے بڑی دولت ہے
+                        </p>
+                        <p class="english-trans" style="margin-top: 15px;">
+                            Every moment with you is heaven,<br>
+                            Your love is my greatest treasure
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 6: Celebration -->
+    <div id="page6" class="page">
+        <div class="page-content">
+            <div class="celebration">
+                <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Let's Celebrate! 🎂</h2>
+                <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 20px;">
+                    Make a wish and blow out the candle!
+                </p>
+                
+                <div class="cake-container">
+                    <div class="cake">
+                        <div class="cake-layer layer-1"></div>
+                        <div class="cake-layer layer-2"></div>
+                        <div class="cake-layer layer-3"></div>
+                        <div class="candle"></div>
+                        <div class="flame" id="flame"></div>
+                    </div>
+                </div>
+                
+                <div class="final-message">
+                    Happy Birthday Once Again! 🎉
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 20px; padding: 30px; max-width: 600px; margin: 0 auto; border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 20px;">
+                        May Allah bless you with endless happiness, success in everything you do, 
+                        and a life filled with love, peace, and prosperity. You deserve all the best 
+                        in this world and the next.
+                    </p>
+                    
+                    <p class="urdu-shayari" style="font-size: 1.5rem; margin: 30px 0;">
+                        اللہ آپ کو ہمیشہ خوش رکھے<br>
+                        آپ کی ہر دعا قبول فرمائے
+                    </p>
+                    
+                    <div style="text-align: right; margin-top: 30px; font-style: italic;">
+                        <p>Forever yours,</p>
+                        <p style="font-size: 1.2rem; font-weight: 600; margin-top: 5px;">My Future Husband ❤️</p>
+                    </div>
+                </div>
+                
+                <button class="start-btn" id="restartBtn" style="margin-top: 40px;">
+                    <i class="fas fa-redo"></i> Start Again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts background
+        function createFloatingHearts() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const hearts = ['❤️', '💖', '💕', '💗', '💓', '💘', '💝'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 15 + 's';
+                heart.style.animationDuration = 10 + Math.random() * 10 + 's';
+                heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+                bgAnimation.appendChild(heart);
+            }
+        }
+
+        // Page Navigation
+        const pages = document.querySelectorAll('.page');
+        const navDots = document.querySelectorAll('.nav-dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const startBtn = document.getElementById('startBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const flame = document.getElementById('flame');
+        let currentPage = 0;
+
+        function showPage(index) {
+            // Hide all pages
+            pages.forEach(page => page.classList.remove('active'));
+            navDots.forEach(dot => dot.classList.remove('active'));
+            
+            // Show selected page
+            pages[index].classList.add('active');
+            navDots[index].classList.add('active');
+            currentPage = index;
+            
+            // Update button states
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === pages.length - 1;
+            
+            // Special effects on last page
+            if (index === 5) {
+                createConfetti();
+                flame.addEventListener('click', blowOutCandle);
+            }
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#ff4d94', '#6a11cb', '#2575fc', '#00b09b', '#ffd700', '#ff6b6b'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = '50%';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-20px';
+                confetti.style.zIndex = '9999';
+                confetti.style.animation = `confettiFall ${2 + Math.random() * 3}s linear forwards`;
+                document.body.appendChild(confetti);
+                
+                // Remove after animation
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+
+        // Add CSS for confetti animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes confettiFall {
+                0% {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Blow out candle function
+        function blowOutCandle() {
+            flame.style.opacity = '0';
+            flame.style.transition = 'opacity 0.5s ease';
+            
+            // Create smoke effect
+            for (let i = 0; i < 5; i++) {
+                const smoke = document.createElement('div');
+                smoke.style.position = 'absolute';
+                smoke.style.width = '20px';
+                smoke.style.height = '20px';
+                smoke.style.background = 'rgba(255, 255, 255, 0.5)';
+                smoke.style.borderRadius = '50%';
+                smoke.style.left = '50%';
+                smoke.style.bottom = '180px';
+                smoke.style.transform = 'translateX(-50%)';
+                smoke.style.filter = 'blur(5px)';
+                smoke.style.animation = `smokeRise ${1 + Math.random()}s ease-out forwards`;
+                document.querySelector('.cake-container').appendChild(smoke);
+                
+                setTimeout(() => smoke.remove(), 2000);
+            }
+            
+            // Remove event listener after blowing out
+            flame.removeEventListener('click', blowOutCandle);
+            
+            // Add celebration message
+            setTimeout(() => {
+                const message = document.createElement('div');
+                message.innerHTML = '🎉 Wish Granted! 🎉';
+                message.style.fontSize = '1.5rem';
+                message.style.fontWeight = 'bold';
+                message.style.marginTop = '20px';
+                message.style.animation = 'bounce 1s infinite';
+                document.querySelector('.celebration').appendChild(message);
+                
+                // Add bounce animation
+                const bounceStyle = document.createElement('style');
+                bounceStyle.textContent = `
+                    @keyframes bounce {
+                        0%, 100% { transform: translateY(0); }
+                        50% { transform: translateY(-10px); }
+                    }
+                `;
+                document.head.appendChild(bounceStyle);
+            }, 500);
+            
+            // Add smoke rise animation
+            const smokeStyle = document.createElement('style');
+            smokeStyle.textContent = `
+                @keyframes smokeRise {
+                    0% {
+                        transform: translateX(-50%) translateY(0) scale(1);
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translateX(-50%) translateY(-100px) scale(3);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(smokeStyle);
+        }
+
+        // Event Listeners
+        startBtn.addEventListener('click', () => showPage(1));
+        restartBtn.addEventListener('click', () => showPage(0));
+        
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 0) showPage(currentPage - 1);
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < pages.length - 1) showPage(currentPage + 1);
+        });
+        
+        // Navigation dots click
+        navDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showPage(index));
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (currentPage < pages.length - 1) showPage(currentPage + 1);
+            } else if (e.key === 'ArrowLeft') {
+                if (currentPage > 0) showPage(currentPage - 1);
+            }
+        });
+        
+        // Swipe navigation for mobile
+        let touchStartX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0 && currentPage < pages.length - 1) {
+                    showPage(currentPage + 1);
+                } else if (diff < 0 && currentPage > 0) {
+                    showPage(currentPage - 1);
+                }
+            }
+        });
+        
+        // Initialize
+        createFloatingHearts();
+        showPage(0);
+    </script>
+</body>
+
+</html>
